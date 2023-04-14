@@ -1,13 +1,39 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php'; ?>
+<?php require_once '../inc/nav.php';
+require_once '../functions/functions.php';
+if (isset($_SESSION['data'])) {
+    redirect('profile.php');
+}
+?>
 
 <div class="container">
     <div class="row">
         <div class="col-8 my-5">
             <h1>Register Page</h1>
             <hr>
+            <!-- check for errors -->
+            <?php if (isset($_SESSION['errors'])) :
+                foreach ($_SESSION['errors'] as $error) :
+            ?>
+                    <div class="alert alert-danger"><?= $error ?></div>
 
-            <form>
+            <?php
+                endforeach;
+                unset($_SESSION['errors']);
+
+            endif ?>
+
+            <!-- check for success massages -->
+            <?php if (isset($_SESSION['success'])) :
+
+            ?>
+                <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+
+            <?php
+
+                unset($_SESSION['success']);
+            endif ?>
+            <form action="handlers/register_handler.php" method="POST" enctype="multipart/form-data">
 
                 <!-- First name input -->
                 <div class="mb-3">

@@ -11,30 +11,38 @@ define('URL', 'http://localhost/phpCourse/php_mysql_project/ecommerce/');
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <?php if (!isset($_SESSION['data'])) : ?>
 
-                <!-- HOME -->
+
+                    <!-- Register -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="<?= URL ?>user/register.php">Register</a>
+                    </li>
+
+
+                    <!-- Login -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="<?= URL ?>user/login.php">Login</a>
+                    </li>
+                <?php else : ?>
+                    <!-- HOME -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="<?= URL ?>">Home</a>
+                    </li>
+
+
+
+                    <!-- Profile -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="<?= URL ?>user/profile.php">Profile</a>
+                    </li>
+            </ul>
+
+            <ul class="navbar-nav ">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= URL ?>">Home</a>
+                    <a class="nav-link text-danger" aria-current="page" href="<?= URL ?>user/logout.php">Logout</a>
                 </li>
-
-                <!-- Register -->
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= URL ?>user/register.php">Register</a>
-                </li>
-
-
-                <!-- Login -->
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= URL ?>user/login.php">Login</a>
-                </li>
-
-                <!-- Profile -->
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= URL ?>user/profile.php">Profile</a>
-                </li>
-
-
-
+            <?php endif ?>
             </ul>
 
         </div>
