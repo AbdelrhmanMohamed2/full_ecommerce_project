@@ -30,6 +30,13 @@ define('URL', 'http://localhost/phpCourse/php_mysql_project/ecommerce/');
                         <a class="nav-link active" aria-current="page" href="<?= URL ?>">Home</a>
                     </li>
 
+                    <?php if ($_SESSION['data']['roll'] < 3) : ?>
+                        <!-- Controller -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="<?= URL ?>manager/panel.php">Controller</a>
+                        </li>
+                    <?php endif ?>
+
 
 
                     <!-- Profile -->

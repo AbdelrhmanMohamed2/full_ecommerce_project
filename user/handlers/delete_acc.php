@@ -41,7 +41,8 @@ if (checkMethod('POST')) {
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
     } else {
-        if (deleteAccount($password, $_SESSION['data']['email'])) {
+        $roll = $_SESSION['data']['roll'] ?? 3;
+        if (deleteAccount($password, $_SESSION['data']['id'], $roll)) {
             $_SESSION['success'] = $success_massage;
             unlink(UPLOAD_IMG_PATH . $_SESSION['data']['img']);
             redirect('../logout.php');
@@ -49,6 +50,10 @@ if (checkMethod('POST')) {
             $errors[] = 'Wrong password';
             $_SESSION['errors'] = $errors;
         }
+    }
+    if ($id == $_SESSION['data']['id']) {
+
+        redirect('logout.php');
     }
     redirect('../profile.php');
 

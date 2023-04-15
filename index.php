@@ -11,6 +11,8 @@ if (!isset($_SESSION['data'])) {
         <div class="col-8 my-5">
             <h1>Home Page</h1>
             <hr>
+            <?php require_once 'inc/show_mass.php'; ?>
+
         </div>
     </div>
 </div>
