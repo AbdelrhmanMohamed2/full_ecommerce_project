@@ -19,10 +19,10 @@ $rolls = getAllRolls();
     <div class="row">
         <div class="col-8 my-5">
             <h1>Update User :</h1>
-            <a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="btn btn-success">Back to All Users</a>
+            <a href="all_users.php" class="btn btn-success">Back to All Users</a>
             <hr>
             <?php require_once '../inc/show_mass.php'; ?>
-            <form action="handlers/update_acc_handler.php" method="POST" enctype="multipart/form-data">
+            <form action="users_handlers/update_acc_handler.php" method="POST" enctype="multipart/form-data">
 
                 <!-- First name input -->
                 <div class="mb-3">

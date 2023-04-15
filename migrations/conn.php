@@ -54,7 +54,13 @@ function createTables()
             `roll` INT NOT NULL,
             FOREIGN KEY (`roll`) REFERENCES  `rolls`(`id`)
 
-        );'
+        );',
+        'categories' => 'CREATE TABLE IF NOT EXISTS `categories` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `name` VARCHAR (50) NOT NULL UNIQUE,
+            `description` VARCHAR (50) NOT NULL,
+            `logo` VARCHAR (50) NOT NULL
+        );',
     ];
 
     foreach ($tables as $table) {

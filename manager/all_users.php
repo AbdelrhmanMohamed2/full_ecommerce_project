@@ -17,6 +17,8 @@ $result = getAllUsers();
         <div class="col-12 my-5">
             <h1>All Users : </h1>
             <hr>
+            <?php require_once '../inc/show_mass.php'; ?>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -43,7 +45,7 @@ $result = getAllUsers();
                             <td><?= $user['roll_name'] ?></td>
                             <?php if ($_SESSION['data']['roll'] === 1) : ?>
                                 <td><a href="update_acc.php?id=<?= $user['user_id'] ?>" class="btn btn-info">Edit</a></td>
-                                <td><a href="handlers/delete_acc_handler.php?id=<?= $user['user_id'] ?>" class="btn btn-danger">Delete</a></td>
+                                <td><a href="users_handlers/delete_acc_handler.php?id=<?= $user['user_id'] ?>" class="btn btn-danger">Delete</a></td>
                             <?php endif ?>
                         </tr>
                     <?php endwhile ?>
