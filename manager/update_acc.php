@@ -1,7 +1,9 @@
-<?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
+<?php
+require_once '../inc/header.php';
+require_once '../inc/nav.php';
 require_once '../functions/functions.php';
 require_once '../user/db_functions/users_functions.php';
+
 if (!isset($_SESSION['data'])) {
     redirect('../user/login.php');
 } elseif ($_SESSION['data']['roll'] != 1 || !isset($_GET['id'])) {

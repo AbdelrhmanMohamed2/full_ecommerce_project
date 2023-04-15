@@ -2,6 +2,7 @@
 <?php require_once '../inc/nav.php';
 require_once '../functions/functions.php';
 require_once '../user/db_functions/users_functions.php';
+
 if (!isset($_SESSION['data'])) {
     redirect('../user/login.php');
 } elseif ($_SESSION['data']['roll'] > 3) {
@@ -28,6 +29,7 @@ $result = getAllRolls();
                         <div class="accordion-body">
 
                             <a href="all_users.php" class="btn btn-primary">All Users</a>
+                            <a href="all_cat.php" class="btn btn-primary">All Categories</a>
 
                         </div>
                     </div>
