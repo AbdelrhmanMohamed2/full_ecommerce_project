@@ -61,6 +61,21 @@ function createTables()
             `description` VARCHAR (50) NOT NULL,
             `logo` VARCHAR (50) NOT NULL
         );',
+        'products' => 'CREATE TABLE IF NOT EXISTS `products` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `name` VARCHAR (50) NOT NULL UNIQUE,
+            `description` VARCHAR (50) NOT NULL,
+            `category_id` INT NOT NULL,
+            `price` INT NOT NULL,
+            `stock` INT NOT NULL,
+            FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`)
+        );',
+        'product_imgs' => 'CREATE TABLE IF NOT EXISTS `product_imgs` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `img_path` VARCHAR (50) NOT NULL, 
+            `product_id` INT NOT NULL,
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+        );',
     ];
 
     foreach ($tables as $table) {

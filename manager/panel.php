@@ -2,13 +2,15 @@
 <?php require_once '../inc/nav.php';
 require_once '../functions/functions.php';
 require_once '../user/db_functions/users_functions.php';
+require_once 'cat_db_functions/cat_functions.php';
 
 if (!isset($_SESSION['data'])) {
     redirect('../user/login.php');
-} elseif ($_SESSION['data']['roll'] > 3) {
+} elseif ($_SESSION['data']['roll'] > 2) {
     redirect('../user/profile.php');
 }
 $result = getAllRolls();
+$all_categories = getAllCat();
 ?>
 
 <div class="container">
@@ -28,8 +30,9 @@ $result = getAllRolls();
                     <div id="show_data" class="accordion-collapse collapse" data-bs-parent="#top">
                         <div class="accordion-body">
 
-                            <a href="all_users.php" class="btn btn-primary">All Users</a>
-                            <a href="all_cat.php" class="btn btn-primary">All Categories</a>
+                            <a href="all_users.php" class="btn btn-primary">Show All Users</a>
+                            <a href="all_cat.php" class="btn btn-primary">Show All Categories</a>
+                            <a href="" class="btn btn-primary">Show All Products</a>
 
                         </div>
                     </div>
@@ -108,6 +111,69 @@ $result = getAllRolls();
 
                                                     <button type="submit" class="btn btn-primary">Create</button>
                                                 </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- create products -->
+                                <div class="accordion accordion-flush" id="inside">
+
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#products_area" aria-expanded="false" aria-controls="products_area">
+                                                Create New Product
+                                            </button>
+                                        </h2>
+                                        <div id="products_area" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+
+                                            <div class="accordion-body">
+                                                <form method="POST" action="../product/handlers/create_product_handler.php" enctype="multipart/form-data">
+
+                                                    <div class="mb-3">
+                                                        <label for="product_name" class="form-label">Product Name</label>
+                                                        <input type="text" name="product_name" class="form-control" id="product_name">
+                                                    </div>
+
+
+                                                    <div class="mb-3">
+                                                        <label for="product_description" class="form-label">Product Description</label>
+                                                        <input type="text" name="product_description" class="form-control" id="product_description">
+                                                    </div>
+
+
+                                                    <div class="mb-3">
+                                                        <label for="product_price" class="form-label">Product Price</label>
+                                                        <input type="number" name="product_price" class="form-control" id="product_price">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="product_stock" class="form-label">Product Stock</label>
+                                                        <input type="number" name="product_stock" class="form-control" id="product_stock">
+                                                    </div>
+
+
+
+                                                    <div class="mb-3">
+                                                        <select class="form-select" name="category_id">
+                                                            <option selected>Open to select product category</option>
+                                                            <?php while ($category = mysqli_fetch_assoc($all_categories)) : ?>
+                                                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                                                            <?php endwhile ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="product_imgs" class="form-label">Product Imgs</label>
+                                                        <input class="form-control" name="product_imgs[]" multiple type="file" id="product_imgs">
+                                                    </div>
+
+
+                                                    <button type="submit" class="btn btn-primary">Create</button>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
