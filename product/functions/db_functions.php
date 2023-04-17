@@ -21,7 +21,7 @@ function checkExists($value, $column,  $table)
 //#################################################################################
 
 //#################################################################################
-// check exists
+// check name exists for edit
 function checkName($name, $id)
 {
     $conn = getConnection();
@@ -39,7 +39,7 @@ function checkName($name, $id)
 
 
 //#################################################################################
-// create new category 
+// create new product 
 function createProduct($new_product)
 {
     $conn = getConnection();
@@ -59,7 +59,7 @@ function createProduct($new_product)
 
 
 //#################################################################################
-// create new category 
+// insert imgs of a product
 function insertImgs($imgs, $product_id)
 {
     $conn = getConnection();
@@ -81,7 +81,7 @@ function insertImgs($imgs, $product_id)
 
 
 //#################################################################################
-// get all category 
+// get all products 
 function getAllProducts()
 {
     $conn = getConnection();
@@ -102,7 +102,7 @@ function getAllProducts()
 
 
 //#################################################################################
-// get all category 
+// get all product info 
 function getProductInfo($id)
 {
     $conn = getConnection();
@@ -125,7 +125,7 @@ function getProductInfo($id)
 //#################################################################################
 
 //#################################################################################
-// get all category 
+// get all product img 
 function getProductImgs($id)
 {
     $data = [];
@@ -150,7 +150,7 @@ function getProductImgs($id)
 //#################################################################################
 
 //#################################################################################
-// get all category 
+//  delete All Imgs of a product
 function deleteAllImgs($id)
 {
     $all_product_img = getProductImgs($id);
@@ -169,7 +169,7 @@ function deleteAllImgs($id)
 //#################################################################################
 
 //#################################################################################
-// get all category 
+// delete Product 
 function deleteProduct($id)
 {
     deleteAllImgs($id);
@@ -188,7 +188,7 @@ function deleteProduct($id)
 
 
 //#################################################################################
-// get all category 
+// Update Product 
 function UpdateProduct($all_new_data)
 {
 
@@ -205,5 +205,42 @@ function UpdateProduct($all_new_data)
 
 
     mysqli_close($conn);
+}
+//#################################################################################
+
+
+//#################################################################################
+// Update Product 
+function categoryProducts($category_id)
+{
+
+    $conn = getConnection();
+
+    $sql = "SELECT p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price,
+    p.stock AS product_stock, c.name AS category_name
+    FROM `products` AS p
+    INNER JOIN `categories` AS c
+    ON p.category_id = c.id
+    WHERE c.id = ?";
+    $data = [];
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $category_id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_bind_result($stmt, $id, $name, $desc, $cat_id, $price, $stock);
+    while (mysqli_stmt_fetch($stmt)) {
+        $data[$id]['product_id'] = $id;
+        $data[$id]['product_name'] = $name;
+        $data[$id]['product_description'] = $desc;
+        $data[$id]['cat_id'] = $cat_id;
+        $data[$id]['price'] = $price;
+        $data[$id]['stock'] = $stock;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+
+
+    return ($data);
 }
 //#################################################################################

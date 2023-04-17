@@ -42,7 +42,7 @@ function createTables()
     $tables = [
         'rolls' => 'CREATE TABLE IF NOT EXISTS `rolls` (
             `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-            `name` VARCHAR (50) NOT NULL
+            `name` VARCHAR (50) NOT NULL UNIQUE
         );',
         'users' => 'CREATE TABLE IF NOT EXISTS `users` (
             `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 

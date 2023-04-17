@@ -1,9 +1,9 @@
 <?php require_once 'inc/header.php'; ?>
 <?php require_once 'inc/nav.php';
 require_once 'functions/functions.php';
-if (!isset($_SESSION['data'])) {
-    redirect('user/login.php');
-}
+require_once 'manager/cat_db_functions/cat_functions.php';
+$result = getAllCat();
+
 ?>
 
 <div class="container">
@@ -12,11 +12,11 @@ if (!isset($_SESSION['data'])) {
         <div class="col-5">
             <ul class="list-group">
                 <h4>All Categories: </h4>
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A fourth item</li>
-                <li class="list-group-item">And a fifth one</li>
+                <?php while ($cat = mysqli_fetch_assoc($result)) :     ?>
+                    <li class="list-group-item"><a href="product/products_by_cat.php?id=<?= $cat['id'] ?>"><?= $cat['name'] ?></a></li>
+
+                <?php endwhile ?>
+
             </ul>
         </div>
         <div class="col-5">

@@ -3,9 +3,8 @@
 
 require_once '../functions/functions.php';
 require_once 'functions/db_functions.php';
-if (!isset($_SESSION['data'])) {
-    redirect('../user/login.php');
-} elseif (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     redirect('../index.php');
 } elseif (!checkExists($_GET['id'], 'id',  'products')) {
     redirect('../index.php');
