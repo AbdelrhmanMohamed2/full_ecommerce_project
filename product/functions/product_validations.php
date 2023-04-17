@@ -36,8 +36,6 @@ function validateProductName($pro_name)
         $error = 'product name is too larg, max = ' . MAX_NAME_SIZE;
     } elseif (minInputSize($pro_name, MIN_NAME_SIZE)) {
         $error = 'product name is too small, min = ' . MIN_NAME_SIZE;
-    } elseif (checkExists($pro_name, 'name',  'products')) {
-        $error = 'product name has been used before';
     }
     return ['error' => $error, 'value' => $pro_name];
 }
@@ -128,7 +126,7 @@ function validateProductImgs($pro_imgs)
         finfo_close($finfo);
     }
     if (!empty($error)) {
-        deleteImgsOnError($imgs_new_path);
+        deleteAllProductImgs($imgs_new_path);
     }
     return ['error' => $error, 'value' => $imgs_new_path];
 }
@@ -136,7 +134,7 @@ function validateProductImgs($pro_imgs)
 
 // ######################################################################
 // delete all imgs if any error 
-function deleteImgsOnError($imgs_path)
+function deleteAllProductImgs($imgs_path)
 {
     foreach ($imgs_path as $img_path) {
         unlink(UPLOAD_IMG_PATH . $img_path);

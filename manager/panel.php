@@ -32,7 +32,7 @@ $all_categories = getAllCat();
 
                             <a href="all_users.php" class="btn btn-primary">Show All Users</a>
                             <a href="all_cat.php" class="btn btn-primary">Show All Categories</a>
-                            <a href="" class="btn btn-primary">Show All Products</a>
+                            <a href="../product/all_products.php" class="btn btn-primary">Show All Products</a>
 
                         </div>
                     </div>

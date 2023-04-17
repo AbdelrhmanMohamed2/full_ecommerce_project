@@ -62,6 +62,11 @@ function deleteCategory($id)
     mysqli_stmt_bind_param($stmt, "i", $id);
 
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($result->num_rows == 0) {
+        mysqli_close($conn);
+        return false;
+    }
     mysqli_close($conn);
     return $old_logo;
 }

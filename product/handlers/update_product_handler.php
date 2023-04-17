@@ -5,7 +5,7 @@ require_once '../../functions/validations.php';
 require_once '../functions/db_functions.php';
 
 $errors = [];
-$success_massage = 'product created successfully';
+$success_massage = 'product Updated successfully';
 $product_data = [];
 
 if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
@@ -19,16 +19,27 @@ if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
     $product_price = $_POST['product_price'];
     $product_stock = $_POST['product_stock'];
     $category_id = $_POST['category_id'];
-    $product_imgs = $_FILES['product_imgs'];
+    $product_id = $_POST['product_id'];
 
 
     // validations 
+
+    // product id
+    $product_id_validation = validateProductNumbers($product_id, 'id');
+    if (!empty($product_id_validation['error'])) {
+        $errors[] = $product_id_validation['error'];
+    } elseif (!checkExists($product_id, 'id',  'products')) {
+        $errors[] = 'invalid category';
+    } else {
+        $product_data['id'] =  $product_id_validation['value'];
+    }
+
     // product name
     $product_name_validation = validateProductName($product_name);
     if (!empty($product_name_validation['error'])) {
         $errors[] = $product_name_validation['error'];
-    } elseif (checkExists($product_name_validation['value'], 'name',  'products')) {
-        $error = 'product name has been used before';
+    } elseif (checkName($product_name_validation['value'], $product_id_validation['value'])) {
+        $errors[] = 'name already used before';
     } else {
         $product_data['name'] =  $product_name_validation['value'];
     }
@@ -68,32 +79,29 @@ if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
     } elseif (!checkExists($category_id, 'id',  'categories')) {
         $errors[] = 'invalid category';
     } else {
-        $product_data['category'] =  $product_category_validation['value'];
+        $product_data['category_id'] =  $product_category_validation['value'];
     }
 
 
-    // product imgs
-    $product_imgs_validation = validateProductImgs($product_imgs);
-    if (!empty($product_imgs_validation['error'])) {
-        $errors[] = $product_imgs_validation['error'];
-    } else {
-        $product_data['imgs'] =  $product_imgs_validation['value'];
-    }
+
+
+
 
 
 
     // check for errors
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        if (isset($product_data['imgs'])) {
-            deleteAllProductImgs($product_data['imgs']);
-        }
+        // if (isset($product_data['imgs'])) {
+        //     deleteAllProductImgs($product_data['imgs']);
+        // }
     } else {
-        createProduct($product_data);
+        // createProduct($product_data);
+        UpdateProduct($product_data);
         $_SESSION['success'] = $success_massage;
     }
 
-    redirect('../../manager/panel.php');
+    redirect('../edit_product.php?id=' . $product_id_validation['value']);
 
     // wrong method
 } else {
