@@ -39,7 +39,7 @@ $result = getAllUsers();
 
                         <tr>
                             <th scope="row"><?= $user['user_id'] ?></th>
-                            <td><?= $user['first_name'] . " " . $user['first_name'] ?></td>
+                            <td><?= $user['first_name'] . " " . $user['last_name'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><img width="150" src="../user/imgs/<?= $user['img'] ?>" alt=""></td>
                             <td><?= $user['roll_name'] ?></td>

@@ -9,7 +9,7 @@ define('MAX_PASSWORD_SIZE', 20);
 define('MIN_PASSWORD_SIZE', 6);
 
 // img size
-define('MAX_IMG_SIZE', 500000);
+define('MAX_IMG_SIZE', 5000000);
 define('MIN_IMG_SIZE', 1000);
 
 

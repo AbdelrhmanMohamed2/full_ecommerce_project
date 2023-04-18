@@ -11,7 +11,7 @@ $success_massage = 'IMG updated successfully!';
 if (checkMethod('POST')) {
     // consts
     // img size
-    define('MAX_IMG_SIZE', 500000);
+    define('MAX_IMG_SIZE', 5000000);
     define('MIN_IMG_SIZE', 1000);
 
     // img upload path

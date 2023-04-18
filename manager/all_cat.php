@@ -40,7 +40,7 @@ $result = getAllCat();
 
                         <tr>
                             <th scope="row"><?= $cat['id'] ?></th>
-                            <td><?= $cat['name'] ?></td>
+                            <td><a href="../product/products_by_cat.php?id=<?= $cat['id'] ?>"><?= $cat['name'] ?></a></td>
                             <td><?= $cat['description'] ?></td>
                             <td><img width="150" src="cat_logos/<?= $cat['logo'] ?>" alt=""></td>
                             <?php if ($_SESSION['data']['roll'] === 1) : ?>

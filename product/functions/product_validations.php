@@ -16,7 +16,7 @@ define('MAX_DESC_SIZE', 30);
 define('MIN_DESC_SIZE', 5);
 
 // LOGO size
-define('MAX_IMG_SIZE', 500000);
+define('MAX_IMG_SIZE', 5000000);
 define('MIN_IMG_SIZE', 1000);
 
 // ######################################################################

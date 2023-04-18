@@ -19,7 +19,7 @@ if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
     define('MAX_DESC_SIZE', 30);
     define('MIN_DESC_SIZE', 5);
     // LOGO size
-    define('MAX_LOGO_SIZE', 500000);
+    define('MAX_LOGO_SIZE', 5000000);
     define('MIN_LOGO_SIZE', 1000);
     // logo upload path
     define('UPLOAD_LOGO_PATH', "../cat_logos/");
