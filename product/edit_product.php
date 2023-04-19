@@ -1,20 +1,21 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
+<?php require_once  ROOT . 'inc/nav.php';
 
-require_once '../functions/functions.php';
+require_once  ROOT . 'functions/functions.php';
 require_once 'functions/db_functions.php';
 
 if (!isset($_SESSION['data'])) {
     redirect('../user/login.php');
 } elseif (!isset($_GET['id']) || !is_numeric($_GET['id'])  || $_SESSION['data']['roll'] != 1) {
     redirect('../index.php');
-} elseif (!checkExists($_GET['id'], 'id',  'products')) {
-    redirect('../index.php');
 }
 
 require_once '../manager/cat_db_functions/cat_functions.php';
 
 $product = getProductInfo($_GET['id']);
+if (!$product) {
+    redirect('../index.php');
+}
 $product_imgs = getProductImgs($_GET['id']);
 $all_categories = getAllCat();
 
@@ -107,4 +108,4 @@ $all_categories = getAllCat();
     </div>
 
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

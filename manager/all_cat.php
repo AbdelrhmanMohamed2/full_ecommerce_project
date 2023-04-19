@@ -1,6 +1,6 @@
-<?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
-require_once '../functions/functions.php';
+<?php require_once  '../inc/header.php'; ?>
+<?php require_once  ROOT . 'inc/nav.php';
+require_once  ROOT . 'functions/functions.php';
 require_once 'cat_db_functions/cat_functions.php';
 
 if (!isset($_SESSION['data'])) {
@@ -55,4 +55,4 @@ $result = getAllCat();
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

@@ -1,16 +1,17 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
+<?php require_once  ROOT . 'inc/nav.php';
 
-require_once '../functions/functions.php';
+require_once  ROOT . 'functions/functions.php';
 require_once 'functions/db_functions.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    redirect('../index.php');
-} elseif (!checkExists($_GET['id'], 'id',  'products')) {
-    redirect('../index.php');
+    redirect(URL);
 }
 
 $product = getProductInfo($_GET['id']);
+if (!$product) {
+    redirect(URL);
+}
 $product_imgs = getProductImgs($_GET['id']);
 
 
@@ -19,7 +20,7 @@ $product_imgs = getProductImgs($_GET['id']);
 
 <div class="container">
 
-    <?php require_once '../inc/show_mass.php'; ?>
+    <?php require_once  ROOT . 'inc/show_mass.php'; ?>
 
 
     <div class="row my-5">
@@ -80,11 +81,12 @@ $product_imgs = getProductImgs($_GET['id']);
                 </div>
                 <hr>
 
-                <form class="p-4" method="POST" action="handlers/change_img.php" enctype="multipart/form-data">
+                <form class="p-4" method="GET" action="../cart/handlers/add_to_cart.php" enctype="multipart/form-data">
                     <!-- user img input -->
                     <div class="mb-3">
                         <label for="order" class="form-label">Order Now: </label>
-                        <input name="order" value="1" class="form-control" type="number" id="order">
+                        <input name="qty" value="1" class="form-control" type="number" id="order">
+                        <input name="id" value="<?= $_GET['id'] ?>" hidden>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
@@ -101,4 +103,4 @@ $product_imgs = getProductImgs($_GET['id']);
         <?php require_once 'top_product_for_cat.php' ?>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

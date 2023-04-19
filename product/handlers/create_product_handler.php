@@ -11,6 +11,10 @@ $product_data = [];
 if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
 
     // validation functions and logic
+    define('UPLOAD_IMG_PATH', "../imgs/");
+    if (!is_dir(UPLOAD_IMG_PATH)) {
+        mkdir(UPLOAD_IMG_PATH, "0777");
+    }
     require_once '../functions/product_validations.php';
 
     // data 

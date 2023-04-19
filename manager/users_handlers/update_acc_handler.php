@@ -14,9 +14,9 @@ if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
     // consts
     // img upload path
     define('UPLOAD_IMG_PATH', "../../user/imgs/");
-    if (!is_dir(UPLOAD_IMG_PATH)) {
-        mkdir(UPLOAD_IMG_PATH, "0777");
-    }
+    // if (!is_dir(UPLOAD_IMG_PATH)) {
+    //     mkdir(UPLOAD_IMG_PATH, "0777");
+    // }
 
     // name length
     define('MAX_NAME_SIZE', 15);
@@ -27,7 +27,7 @@ if (checkMethod('POST') && $_SESSION['data']['roll'] == 1) {
     define('MIN_PASSWORD_SIZE', 6);
 
     // img size
-    define('MAX_IMG_SIZE', 500000);
+    define('MAX_IMG_SIZE', 5000000);
     define('MIN_IMG_SIZE', 1000);
 
 

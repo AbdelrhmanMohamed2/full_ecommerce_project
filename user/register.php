@@ -1,5 +1,5 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
+<?php require_once  ROOT . 'inc/nav.php';
 require_once '../functions/functions.php';
 if (isset($_SESSION['data'])) {
     redirect('profile.php');
@@ -12,7 +12,7 @@ if (isset($_SESSION['data'])) {
             <h1>Register Page</h1>
             <hr>
 
-            <?php require_once '../inc/show_mass.php'; ?>
+            <?php require_once  ROOT . 'inc/show_mass.php'; ?>
             <form action="handlers/register_handler.php" method="POST" enctype="multipart/form-data">
 
                 <?php require_once 'reg_form.php' ?>
@@ -23,4 +23,4 @@ if (isset($_SESSION['data'])) {
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

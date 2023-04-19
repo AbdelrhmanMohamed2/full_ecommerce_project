@@ -10,7 +10,7 @@ $success_massage = 'Product Deleted successfully!';
 
 
 if (checkMethod('GET') && $_SESSION['data']['roll'] == 1) {
-
+    define('UPLOAD_IMG_PATH', "../imgs/");
 
     // data 
     $product_id = $_GET['id'];

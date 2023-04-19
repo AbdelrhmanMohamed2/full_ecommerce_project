@@ -2,10 +2,7 @@
 // require_once '../../functions/validations.php';
 // const
 // img upload path
-define('UPLOAD_IMG_PATH', "../imgs/");
-if (!is_dir(UPLOAD_IMG_PATH)) {
-    mkdir(UPLOAD_IMG_PATH, "0777");
-}
+
 
 // name length
 define('MAX_NAME_SIZE', 15);

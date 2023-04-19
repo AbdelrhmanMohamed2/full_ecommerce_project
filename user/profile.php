@@ -1,5 +1,5 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
+<?php require_once  ROOT . 'inc/nav.php';
 
 require_once '../functions/functions.php';
 if (!isset($_SESSION['data'])) {
@@ -11,7 +11,7 @@ $user = $_SESSION['data'];
 
 <div class="container">
 
-    <?php require_once '../inc/show_mass.php'; ?>
+    <?php require_once  ROOT . 'inc/show_mass.php'; ?>
 
 
     <div class="row my-5">
@@ -118,4 +118,4 @@ $user = $_SESSION['data'];
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

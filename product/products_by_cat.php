@@ -1,16 +1,18 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
-require_once '../functions/functions.php';
+<?php require_once  ROOT . 'inc/nav.php';
+require_once  ROOT . 'functions/functions.php';
+require_once  ROOT . 'manager/cat_db_functions/cat_functions.php';
 require_once 'functions/db_functions.php';
-require_once '../manager/cat_db_functions/cat_functions.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     redirect('../index.php');
-} elseif (!checkExists($_GET['id'], 'id',  'categories')) {
-    redirect('../index.php');
 }
 $cat_name = getOnaCat($_GET['id']);
+if (!$cat_name) {
+    redirect('../index.php');
+}
 $result = categoryProducts($_GET['id']);
+
 
 ?>
 
@@ -21,34 +23,27 @@ $result = categoryProducts($_GET['id']);
             <hr>
             <?php require_once '../inc/show_mass.php'; ?>
 
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#product id</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Product Description</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Available</th>
-                        <th scope="col">Show</th>
+            <div class="col-12 d-flex flex-wrap gap-5 my-5">
+                <?php foreach ($result as $product) :
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($result as $product) :     ?>
+                ?>
 
-                        <tr>
-                            <th scope="row"><?= $product['product_id'] ?></th>
-                            <td><?= $product['product_name'] ?></td>
-                            <td><?= $product['product_description'] ?></td>
-                            <td><?= $product['price'] ?></td>
-                            <td><?= $product['stock'] > 5 ? "Available" : "last : " . $product['stock']  ?></td>
-                            <td><a href="show_product.php?id=<?= $product['product_id'] ?>" class="btn btn-success">Show</a></td>
 
-                        </tr>
-                    <?php endforeach  ?>
+                    <div class="card" style="width: 18rem;">
+                        <img width="200" height="250" src="imgs/<?= $product['product_image'] ?>" class="d-block w-100" alt="...">
 
-                </tbody>
-            </table>
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $product['product_name'] ?></h5>
+                            <p class="card-text"><?= $product['product_description'] ?></p>
+                            <p class="card-text">Price : <?= $product['product_price'] ?> EGP</p>
+                            <a href="show_product.php?id=<?= $product['product_id'] ?>" class="btn btn-success">More Details</a>
+                            <a href="../cart/handlers/add_to_cart.php?id=<?= $product['product_id'] ?>&qty=1" class="btn btn-primary">Add To Cart</a>
+                        </div>
+                    </div>
+                <?php endforeach  ?>
+
+            </div>
+
         </div>
     </div>
 </div>

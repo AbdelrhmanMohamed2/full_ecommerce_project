@@ -1,7 +1,7 @@
 <?php require_once '../inc/header.php'; ?>
-<?php require_once '../inc/nav.php';
-require_once '../functions/functions.php';
-require_once '../user/db_functions/users_functions.php';
+<?php require_once  ROOT . 'inc/nav.php';
+require_once  ROOT . 'functions/functions.php';
+require_once  ROOT . 'user/db_functions/users_functions.php';
 require_once 'cat_db_functions/cat_functions.php';
 
 if (!isset($_SESSION['data'])) {
@@ -190,4 +190,4 @@ $all_categories = getAllCat();
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

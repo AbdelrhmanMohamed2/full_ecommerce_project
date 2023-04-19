@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php session_start();
+
+define('URL', 'http://localhost/phpCourse/php_mysql_project/ecommerce/');
+define('ROOT', 'C:/xampp/htdocs/phpCourse/php_mysql_project/ecommerce/');
+?>
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 

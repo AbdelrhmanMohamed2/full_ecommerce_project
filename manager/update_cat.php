@@ -1,7 +1,7 @@
 <?php
 require_once '../inc/header.php';
-require_once '../inc/nav.php';
-require_once '../functions/functions.php';
+require_once  ROOT . 'inc/nav.php';
+require_once  ROOT . 'functions/functions.php';
 require_once 'cat_db_functions/cat_functions.php';
 
 if (!isset($_SESSION['data'])) {
@@ -11,7 +11,7 @@ if (!isset($_SESSION['data'])) {
 }
 
 $cat_data = getOnaCat($_GET['id']);
-if (!isset($cat_data['name'])) {
+if (!$cat_data) {
 
     redirect('all_cat.php');
 }
@@ -51,4 +51,4 @@ if (!isset($cat_data['name'])) {
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>

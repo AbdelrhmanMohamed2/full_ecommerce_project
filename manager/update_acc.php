@@ -1,8 +1,8 @@
 <?php
 require_once '../inc/header.php';
-require_once '../inc/nav.php';
-require_once '../functions/functions.php';
-require_once '../user/db_functions/users_functions.php';
+require_once  ROOT . 'inc/nav.php';
+require_once  ROOT . 'functions/functions.php';
+require_once  ROOT . 'user/db_functions/users_functions.php';
 
 if (!isset($_SESSION['data'])) {
     redirect('../user/login.php');
@@ -10,8 +10,7 @@ if (!isset($_SESSION['data'])) {
     redirect('../user/profile.php');
 }
 $user_info = getUserInfo($_GET['id']);
-if (!isset($user_info['email'])) {
-
+if (!$user_info) {
     redirect('all_users.php');
 }
 $rolls = getAllRolls();
@@ -82,4 +81,4 @@ $rolls = getAllRolls();
         </div>
     </div>
 </div>
-<?php require_once '../inc/footer.php'; ?>
+<?php require_once  ROOT . 'inc/footer.php'; ?>
