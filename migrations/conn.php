@@ -86,6 +86,30 @@ function createTables()
             FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
             FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
         );',
+        'orders_status' => 'CREATE TABLE IF NOT EXISTS `orders_status` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `status` VARCHAR (50) NOT NULL UNIQUE
+        );',
+        'orders' => 'CREATE TABLE IF NOT EXISTS `orders` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `status` INT NOT NULL DEFAULT 1,
+            `user_id` INT NOT NULL, 
+            `taxes` FLOAT NOT NULL,
+            `total_amount` FLOAT NOT NULL,
+            `delivery` INT NOT NULL,
+            `time_ordered` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+            FOREIGN KEY (`status`) REFERENCES `orders_status`(`id`)
+        );',
+        'cart_order' => 'CREATE TABLE IF NOT EXISTS `cart_order` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `order_id` INT NOT NULL,
+            `product_id` INT NOT NULL,
+            `quantity` INT NOT NULL,
+            `total_price` INT NOT NULL,
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
+            FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
+        );',
     ];
 
     foreach ($tables as $table) {
@@ -102,15 +126,21 @@ function createTables()
 function createRolls()
 {
     $conn = getConnection();
-    $rolls = [
+    $all_data = [
         'super_admin' => 'INSERT INTO `rolls` (`name`) VALUES ("super_admin")',
         'admin' => 'INSERT INTO `rolls` (`name`) VALUES ("admin")',
         'user' => 'INSERT INTO `rolls` (`name`) VALUES ("user")',
 
+        'checking' => 'INSERT INTO `orders_status` (`status`) VALUES ("checking")',
+        'canceled' => 'INSERT INTO `orders_status` (`status`) VALUES ("canceled")',
+        'rejected' => 'INSERT INTO `orders_status` (`status`) VALUES ("rejected")',
+        'accepted' => 'INSERT INTO `orders_status` (`status`) VALUES ("accepted")',
+        'delivered' => 'INSERT INTO `orders_status` (`status`) VALUES ("delivered")',
+
     ];
 
-    foreach ($rolls as $roll) {
-        var_dump(mysqli_query($conn, $roll));
+    foreach ($all_data as $data) {
+        var_dump(mysqli_query($conn, $data));
     }
 
     mysqli_close($conn);
@@ -125,7 +155,7 @@ function createSuperAdmin()
     $conn = getConnection();
 
     $sql = 'INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `img`, `roll`) VALUES
-     ("admin", "admin", "admin@admin.com", "admin", "..." , 1)';
+     ("super", "admin", "admin@admin.com", "admin", "..." , 1)';
 
     var_dump(mysqli_query($conn, $sql));
 

@@ -86,7 +86,7 @@ function getAllProducts()
 {
     $conn = getConnection();
     $sql = "SELECT p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price,
-    p.stock AS product_stock, c.name AS category_name, c.logo AS category_logo
+    p.stock AS product_stock, c.name AS category_name, c.logo AS category_logo, c.id AS category_id
     FROM `products` AS p
     INNER JOIN `categories` AS c
     ON p.category_id = c.id
@@ -256,23 +256,21 @@ function categoryProducts($category_id)
 }
 //#################################################################################
 
-// //#################################################################################
-// // check name exists for edit
-// function checkQty($qty, $id)
-// {
-//     $conn = getConnection();
-//     $sql = "SELECT `stock` FROM `products` WHERE  `id` = ?";
+//#################################################################################
+// check name exists for edit
+function updateOnOrder($product_id, $quantity)
+{
+    $conn = getConnection();
+    $sql = "UPDATE `products` SET `stock` = `stock` - ? WHERE `id` = ?";
 
-//     $stmt = mysqli_prepare($conn, $sql);
-//     mysqli_stmt_bind_param($stmt, "i", $id);
-//     mysqli_stmt_execute($stmt);
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $quantity, $product_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_num_rows($stmt);
 
-//     mysqli_stmt_bind_result($stmt, $stock);
-//     mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
 
-//     mysqli_stmt_close($stmt);
-//     mysqli_close($conn);
-
-//     return $stock < $qty;
-// }
-// //#################################################################################
+    return $result;
+}
+//#################################################################################

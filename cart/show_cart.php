@@ -9,7 +9,6 @@ if (!isset($_SESSION['data'])) {
 require_once 'cart_functions/cart_functions.php';
 $cart_info = getCartInfo($_SESSION['data']['id']);
 $total = 0;
-$delivery = 50;
 
 
 
@@ -59,8 +58,13 @@ $delivery = 50;
                         $total += $cart_item['total_price'];
 
                     endforeach;
+
                     $tax = $total * .1;
+                    $delivery = $tax > 0 ? 50 : 0;
                     $total_amount = $total + $delivery + $tax;
+
+
+
                     ?>
 
 
@@ -73,7 +77,7 @@ $delivery = 50;
             <h4>Delivery : <?= $delivery ?> EGP</h4>
             <hr>
             <h4>Total : <?= $total_amount ?> EGP</h4>
-            <a href="" class="btn btn-info">Order Now!</a>
+            <a href="<?= URL ?>order/handlers/create_order.php" class="btn btn-info">Order Now!</a>
         </div>
     </div>
 </div>

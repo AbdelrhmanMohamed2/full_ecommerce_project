@@ -17,7 +17,7 @@ $result = getAllProducts();
 <div class="container">
     <div class="row">
         <div class="col-12 my-5">
-            <h1>All Products : SELECT Category </h1>
+            <h1>All Products : </h1>
             <hr>
             <?php require_once '../inc/show_mass.php'; ?>
 
@@ -44,7 +44,7 @@ $result = getAllProducts();
                             <th scope="row"><?= $product['product_id'] ?></th>
                             <td><?= $product['product_name'] ?></td>
                             <td><?= $product['product_description'] ?></td>
-                            <td><?= $product['category_name'] ?></td>
+                            <td><a href="<?= URL ?>product/products_by_cat.php?id=<?= $product['category_id'] ?>"><?= $product['category_name'] ?></a></td>
                             <td><img width="150" src="../manager/cat_logos/<?= $product['category_logo'] ?>" alt=""></td>
                             <td><a href="show_product.php?id=<?= $product['product_id'] ?>" class="btn btn-success">Show</a></td>
                             <?php if ($_SESSION['data']['roll'] === 1) : ?>
