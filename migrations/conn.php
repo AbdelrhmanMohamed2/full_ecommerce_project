@@ -50,6 +50,8 @@ function createTables()
             `last_name` VARCHAR (50) NOT NULL,
             `email` VARCHAR (50) NOT NULL UNIQUE,
             `password` VARCHAR (50) NOT NULL,
+            `address` VARCHAR (50) NOT NULL,
+            `phone_number` VARCHAR (50) NOT NULL UNIQUE,
             `img` VARCHAR (50) NOT NULL,
             `roll` INT NOT NULL,
             FOREIGN KEY (`roll`) REFERENCES  `rolls`(`id`)
@@ -68,7 +70,8 @@ function createTables()
             `category_id` INT NOT NULL,
             `price` INT NOT NULL,
             `stock` INT NOT NULL,
-            FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`)
+            FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`), 
+            CHECK(`stock` >= 0)
         );',
         'product_imgs' => 'CREATE TABLE IF NOT EXISTS `product_imgs` (
             `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
@@ -154,8 +157,8 @@ function createSuperAdmin()
 {
     $conn = getConnection();
 
-    $sql = 'INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `img`, `roll`) VALUES
-     ("super", "admin", "admin@admin.com", "admin", "..." , 1)';
+    $sql = 'INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `img`, `roll`, `address`, `phone_number`) VALUES
+     ("super", "admin", "admin@admin.com", "admin", "..." , 1, "admin_home", "010000000")';
 
     var_dump(mysqli_query($conn, $sql));
 
@@ -170,10 +173,10 @@ function createSuperAdmin()
 // create database, tables, add rolls and creating super admin account
 function startWork()
 {
-    // createDataBase();
+    createDataBase();
     createTables();
-    // createRolls();
-    // createSuperAdmin();
+    createRolls();
+    createSuperAdmin();
 }
 //#################################################################################
 

@@ -28,9 +28,9 @@ if (isset($_SESSION['data'])) {
     } else {
         $product = getProductInfo($product_id_validation['value']);
         if (!$product) {
-            $errors['method_error'] = 'product not exists';
+            $errors[] = 'product not exists';
         } elseif ($product['product_stock'] < $product_qty_validation['value']) {
-            $errors['method_error'] = 'your order exceed the stock';
+            $errors[] = 'your order exceed the stock';
         }
         // var_dump($product);
     }

@@ -113,7 +113,7 @@ function getOrderInfo($order_id, $user_id)
 {
     $conn = getConnection();
     $sql = "SELECT 
-    o.id, o.taxes, o.total_amount, o.delivery,o.time_ordered, p.name, co.quantity, co.total_price , os.status,o.user_id
+    o.id, o.taxes, o.total_amount, o.delivery,o.time_ordered, p.id AS product_id, p.name, co.quantity, co.total_price , os.status, o.user_id
     FROM orders AS o
     INNER JOIN 
     cart_order AS co

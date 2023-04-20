@@ -17,6 +17,19 @@
 </div>
 
 
+<!-- address input -->
+<div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input name="address" type="text" class="form-control" id="address">
+</div>
+
+<!-- address input -->
+<div class="mb-3">
+    <label for="phone_number" class="form-label">Phone Number</label>
+    <input name="phone_number" type="text" class="form-control" id="phone_number">
+</div>
+
+
 <!-- password input -->
 <div class="mb-3">
     <label for="password" class="form-label">Password</label>

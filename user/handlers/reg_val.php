@@ -23,6 +23,8 @@ $l_name = sanitize($_POST['l_name']);
 $email = sanitize($_POST['email']);
 $password = sanitize($_POST['password']);
 $con_password = sanitize($_POST['con_password']);
+$address = sanitize($_POST['address']);
+$phone_number = sanitize($_POST['phone_number']);
 
 
 // data validations
@@ -51,6 +53,25 @@ if (empty($l_name)) {
 } else {
     $users_data['l_name'] = $l_name;
 }
+
+
+// address validations
+if (empty($address)) {
+    $errors[] = 'address is required';
+} elseif (is_numeric($address)) {
+    $errors[] = 'address must be string';
+} else {
+    $users_data['address'] = $address;
+}
+
+
+// phone number validations
+if (empty($phone_number)) {
+    $errors[] = 'phone number is required';
+} else {
+    $users_data['phone_number'] = $phone_number;
+}
+
 
 // email validations
 if (empty($email)) {

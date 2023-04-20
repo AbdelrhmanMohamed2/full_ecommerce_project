@@ -7,6 +7,7 @@ if (!isset($_SESSION['data'])) {
 }
 $user = $_SESSION['data'];
 
+
 ?>
 
 <div class="container">
@@ -55,6 +56,18 @@ $user = $_SESSION['data'];
                 <div class="card-body">
                     <h5 class="card-title">Email:</h5>
                     <p class="card-text"><?= $user['email']  ?></p>
+                </div>
+
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Address:</h5>
+                    <p class="card-text"><?= $user['address']  ?></p>
+                </div>
+
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Phone Number:</h5>
+                    <p class="card-text"><?= $user['phone_number']  ?></p>
                 </div>
 
                 <hr>

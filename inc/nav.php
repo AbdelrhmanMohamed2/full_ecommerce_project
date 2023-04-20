@@ -33,7 +33,7 @@
                             </button>
 
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item active" href="<?= URL ?>manager/all_users.php">Show All Users</a></li>
+                                <li><a class="dropdown-item" href="<?= URL ?>manager/all_users.php">Show All Users</a></li>
                                 <li><a class="dropdown-item" href="<?= URL ?>manager/all_cat.php">Show All Categories</a></li>
                                 <li><a class="dropdown-item" href="<?= URL ?>product/all_products.php">Show All Products</a></li>
                                 <li><a class="dropdown-item" href="<?= URL ?>order/all_orders.php">Show All Orders</a></li>

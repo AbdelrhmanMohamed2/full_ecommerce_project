@@ -11,10 +11,9 @@ $order_details = getOrderInfo($_GET['id'], $user_id);
 
 if (mysqli_num_rows($order_details['result']) == 0) {
     redirect(URL);
+} elseif ($order_details['user_id'] != $_SESSION['data']['id'] && $_SESSION['data']['roll'] != 1) {
+    redirect(URL);
 }
-// elseif ($order_details['user_id'] != $_SESSION['data']['id'] && $_SESSION['data']['roll'] != 1) {
-//     redirect(URL);
-// }
 require_once ROOT . 'inc/nav.php';
 
 
@@ -66,7 +65,7 @@ require_once ROOT . 'inc/nav.php';
                 <li class="list-group-item text-primary">Total Amount : <?= $data['total_amount'] ?></li>
                 <li class="list-group-item text-primary">Order Status : <?= $data['status'] ?> </li>
             </ul>
-
+            <a href="handlers/same_order.php?id=<?= $_GET['id'] ?>" class="btn btn-primary my-3">Order The Same Order Again?</a>
         </div>
     </div>
 </div>

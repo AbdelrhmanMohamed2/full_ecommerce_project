@@ -7,12 +7,12 @@ require_once  __DIR__ . '/../../migrations/conn.php';
 function register($new_user)
 {
     $conn = getConnection();
-    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `img`, `roll`) VALUES
-    (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `img`, `roll`, `address`, `phone_number`) VALUES
+    (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($conn, $sql);
     $roll = ($new_user['roll'] ?? 3);
-    mysqli_stmt_bind_param($stmt, "sssssi", $new_user['f_name'], $new_user['l_name'], $new_user['email'], $new_user['password'], $new_user['img'], $roll);
+    mysqli_stmt_bind_param($stmt, "sssssiss", $new_user['f_name'], $new_user['l_name'], $new_user['email'], $new_user['password'], $new_user['img'], $roll, $new_user['address'], $new_user['phone_number']);
     $result = mysqli_stmt_execute($stmt);
 
 

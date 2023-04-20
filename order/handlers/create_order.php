@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+require_once '../../inc/header.php';
 require_once '../../functions/functions.php';
 require_once '../../functions/validations.php';
 require_once '../functions/db_functions.php';
@@ -21,7 +23,10 @@ if (checkMethod('GET') && $_SESSION['cart_counter'] > 0) {
     $total = 0;
 
     foreach ($cart_info as $item) {
-        updateOnOrder($item['product_id'], $item['quantity']);
+        if (updateOnOrder($item['product_id'], $item['quantity']) != 1) {
+            $_SESSION['errors'][] = 'out of stock';
+            redirect($_SERVER['HTTP_REFERER']);
+        }
 
         $total += ($item['total_price']);
     }
@@ -43,7 +48,7 @@ if (checkMethod('GET') && $_SESSION['cart_counter'] > 0) {
     }
 
     $_SESSION['cart_counter'] = 0;
-    redirect($_SERVER['HTTP_REFERER']);
+    redirect(URL . 'order/user_orders.php');
 
     // wrong method
 } else {

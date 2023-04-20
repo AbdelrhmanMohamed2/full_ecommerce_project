@@ -22,7 +22,9 @@ if (checkMethod('POST')) {
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
     } else {
-
+        // echo "<pre>";
+        // var_dump($users_data);
+        // die;
         if (register($users_data)) {
             $_SESSION['success'] = $success_massage;
             redirect("../login.php");
