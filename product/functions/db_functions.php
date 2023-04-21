@@ -210,7 +210,7 @@ function UpdateProduct($all_new_data)
 
 
 //#################################################################################
-// Update Product 
+// get all products foreach category 
 function categoryProducts($category_id)
 {
 
@@ -257,7 +257,7 @@ function categoryProducts($category_id)
 //#################################################################################
 
 //#################################################################################
-// check name exists for edit
+// update stock on order
 function updateOnOrder($product_id, $quantity)
 {
     $conn = getConnection();
@@ -278,7 +278,7 @@ function updateOnOrder($product_id, $quantity)
 
 
 //#################################################################################
-// check name exists for edit
+// top Products Foreach Cat
 function topProductsForCat($cat_id)
 {
     $conn = getConnection();
@@ -299,6 +299,39 @@ function topProductsForCat($cat_id)
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $cat_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $result;
+}
+//#################################################################################
+
+
+//#################################################################################
+// most popular products 
+function popularProducts()
+{
+    $conn = getConnection();
+    $sql = "SELECT p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price, PI.img_path AS product_img, c.name AS category_name
+    FROM 
+        cart_order AS co 
+        INNER JOIN products AS p ON co.product_id = p.id
+        INNER JOIN (
+            SELECT product_id, MIN(id) AS min_id
+            FROM `product_imgs`
+            GROUP BY product_id
+        ) AS pi_min ON p.id = pi_min.product_id
+        INNER JOIN `product_imgs` AS PI ON pi_min.min_id = PI.id
+    INNER JOIN `categories` AS c
+    ON p.category_id = c.id
+    GROUP BY co.product_id 
+    ORDER BY COUNT(*) DESC 
+    LIMIT 4;";
+
+    $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);

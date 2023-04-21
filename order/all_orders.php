@@ -3,7 +3,7 @@
 require_once  ROOT . 'functions/functions.php';
 if (!isset($_SESSION['data'])) {
     redirect('user/login.php');
-} elseif ($_SESSION['data']['roll'] != 1) {
+} elseif ($_SESSION['data']['roll'] > 2) {
     redirect('../user/profile.php');
 }
 require_once  ROOT . 'inc/nav.php';
@@ -28,7 +28,9 @@ $status_result = getAllStatus();
                         <th scope="col">user name</th>
                         <th scope="col">total amount</th>
                         <th scope="col">time ordered</th>
-                        <th scope="col">status</th>
+                        <?php if ($_SESSION['data']['roll'] == 1) : ?>
+                            <th scope="col">status</th>
+                        <?php endif ?>
                         <td>show details</td>
 
                     </tr>
@@ -40,22 +42,24 @@ $status_result = getAllStatus();
                             <td><a href="<?= URL ?>manager/update_acc.php?id=<?= $order['user_id'] ?>"><?= $order['first_name'] ?></a> </td>
                             <td><?= $order['total_amount'] ?></td>
                             <td><?= $order['time_ordered'] ?></td>
-                            <td>
-                                <form method="POST" action="handlers/update_status.php">
-                                    <div class="mb-3">
-                                        <select class="form-select" name="status_id" aria-label="Default select example">
+                            <?php if ($_SESSION['data']['roll'] == 1) : ?>
+                                <td>
+                                    <form method="POST" action="handlers/update_status.php">
+                                        <div class="mb-3">
+                                            <select class="form-select" name="status_id">
 
-                                            <?php foreach ($status_result as $key => $status) :  ?>
-                                                <option value="<?= $key ?>" <?php if ($key == $order['status_id']) : ?> selected class="text-info" <?php endif ?>><?= $status ?> </option>
-                                            <?php endforeach ?>
+                                                <?php foreach ($status_result as $key => $status) :  ?>
+                                                    <option value="<?= $key ?>" <?php if ($key == $order['status_id']) : ?> selected class="text-info" <?php endif ?>><?= $status ?> </option>
+                                                <?php endforeach ?>
 
-                                        </select>
-                                    </div>
-                                    <input type="number" hidden value="<?= $order['order_id'] ?>" name="order_id">
+                                            </select>
+                                        </div>
+                                        <input type="number" hidden value="<?= $order['order_id'] ?>" name="order_id">
 
-                                    <button type="submit" class="btn btn-success">Save</button>
-                                </form>
-                            </td>
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    </form>
+                                </td>
+                            <?php endif ?>
                             <td><a href="order_details.php?id=<?= $order['order_id'] ?>&user_id=<?= $order['user_id'] ?>" class="btn btn-info">show</a> </td>
                         </tr>
                     <?php endwhile ?>

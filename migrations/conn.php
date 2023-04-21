@@ -113,6 +113,16 @@ function createTables()
             FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
             FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
         );',
+        'wishList' => 'CREATE TABLE IF NOT EXISTS `wishList` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `user_id` INT NOT NULL, 
+            `product_id` INT NOT NULL, 
+            `product_name` VARCHAR (50) NOT NULL,
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
+            UNIQUE KEY `my_uniq_id` (`user_id`,`product_id`)
+
+        );',
     ];
 
     foreach ($tables as $table) {
@@ -173,10 +183,10 @@ function createSuperAdmin()
 // create database, tables, add rolls and creating super admin account
 function startWork()
 {
-    createDataBase();
+    // createDataBase();
     createTables();
-    createRolls();
-    createSuperAdmin();
+    // createRolls();
+    // createSuperAdmin();
 }
 //#################################################################################
 

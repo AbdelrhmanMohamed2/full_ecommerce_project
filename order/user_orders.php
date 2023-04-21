@@ -6,8 +6,12 @@ if (!isset($_SESSION['data'])) {
 }
 require_once  ROOT . 'inc/nav.php';
 require_once   'functions/db_functions.php';
-
-$result = getUserOrders($_SESSION['data']['id']);
+if ($_SESSION['data']['roll'] < 2) {
+    $user_id = $_GET['id'] ?? $_SESSION['data']['id'];
+} else {
+    $user_id = $_SESSION['data']['id'];
+}
+$result = getUserOrders($user_id);
 $status_result = getAllStatus();
 
 ?>
@@ -15,7 +19,7 @@ $status_result = getAllStatus();
 <div class="container">
     <div class="row">
         <div class="col-12 my-5">
-            <h1>All Users Orders : </h1>
+            <h1>All Your Orders : </h1>
             <hr>
             <?php require_once '../inc/show_mass.php'; ?>
 

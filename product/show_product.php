@@ -77,7 +77,7 @@ $product_imgs = getProductImgs($_GET['id']);
 
                 <div class="card-body">
                     <h5 class="card-title">Product State :</h5>
-                    <p class="card-text"><?= $product['product_stock'] > 5 ? 'available' : 'last : ' . $product['product_stock'] ?> </p>
+                    <p class="card-text"><?= $product['product_stock'] > 5 ? 'available' : ($product['product_stock'] == 0  ?  "out off stock" :  'last : ' . $product['product_stock']) ?> </p>
                 </div>
                 <hr>
 
