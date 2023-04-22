@@ -1,14 +1,15 @@
 <?php session_start();
 
-// define('URL', 'http://localhost/phpCourse/php_mysql_project/ecommerce/');
-// define('ROOT', 'C:/xampp/htdocs/phpCourse/php_mysql_project/ecommerce/');
-if (strpos($_SERVER['REQUEST_URI'], '.php') !== false) {
-    $url = str_replace(basename($_SERVER['REQUEST_URI']), '', $_SERVER['REQUEST_URI']);
-} else {
-    $url = $_SERVER['REQUEST_URI'];
-}
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . $url);
-define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $url);
+define('URL', 'http://localhost/phpCourse/php_mysql_project/ecommerce/');
+define('ROOT', 'C:/xampp/htdocs/phpCourse/php_mysql_project/ecommerce/');
+// if (strpos($_SERVER['REQUEST_URI'], '.php') !== false) {
+//     $url = str_replace(basename($_SERVER['REQUEST_URI']), '', $_SERVER['REQUEST_URI']);
+// } else {
+//     $url = $_SERVER['REQUEST_URI'];
+// }
+// define('URL', 'http://' . $_SERVER['HTTP_HOST'] . $url);
+// define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $url);
+// var_dump(ROOT)
 ?>
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
