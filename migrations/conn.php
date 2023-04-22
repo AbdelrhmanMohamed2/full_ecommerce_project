@@ -183,10 +183,10 @@ function createSuperAdmin()
 // create database, tables, add rolls and creating super admin account
 function startWork()
 {
-    // createDataBase();
+    createDataBase();
     createTables();
-    // createRolls();
-    // createSuperAdmin();
+    createRolls();
+    createSuperAdmin();
 }
 //#################################################################################
 
