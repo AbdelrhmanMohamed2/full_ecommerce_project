@@ -11,8 +11,7 @@ $cat_name = getOnaCat($_GET['id']);
 if (!$cat_name) {
     redirect('../index.php');
 }
-$result = categoryProducts($_GET['id']);
-
+$result = categoryProducts($_GET['id'], ($_GET['filter'] ?? 'most_recent'));
 
 ?>
 
@@ -21,6 +20,21 @@ $result = categoryProducts($_GET['id']);
         <div class="col-12 my-5">
             <h1>All Products For : <?= $cat_name['name'] ?> </h1>
             <hr>
+            <form method="GET" action="<?= $_SERVER['PHP_SELF']  ?>">
+                <div class="mb-3">
+
+                    <select class="form-select" name="filter" aria-label="Default select example">
+                        <option <?php if (isset($_GET['filter']) && $_GET['filter'] == 'recently_added') : ?> selected <?php endif ?> value="recently_added">Recently Added</option>
+                        <option <?php if (isset($_GET['filter']) && $_GET['filter'] == 'popular') : ?> selected <?php endif ?> value="popular">Popular</option>
+                        <option <?php if (isset($_GET['filter']) && $_GET['filter'] == 'most_ordered') : ?> selected <?php endif ?> value="most_ordered">Most Ordered</option>
+                        <option <?php if (isset($_GET['filter']) && $_GET['filter'] == 'min_max') : ?> selected <?php endif ?> value="min_max">Price : from min to max</option>
+                        <option <?php if (isset($_GET['filter']) && $_GET['filter'] == 'max_min') : ?> selected <?php endif ?> value="max_min">Price : from max to min</option>
+                    </select>
+                </div>
+                <input type="text" name="id" value="<?= $_GET['id'] ?>" hidden>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+
             <?php require_once '../inc/show_mass.php'; ?>
 
             <div class="col-12 d-flex flex-wrap gap-5 my-5">

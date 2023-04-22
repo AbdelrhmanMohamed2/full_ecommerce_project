@@ -107,7 +107,7 @@ function getProductInfo($id)
 {
     $conn = getConnection();
     $sql = "SELECT p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price,
-    p.stock AS product_stock, c.name AS category_name
+    p.stock AS product_stock, c.name AS category_name, c.id AS category_id
     FROM `products` AS p
     INNER JOIN `categories` AS c
     ON p.category_id = c.id
@@ -210,36 +210,202 @@ function UpdateProduct($all_new_data)
 
 
 //#################################################################################
+// get sql to filter all products in one category
+function filterBy($choose = "def")
+{
+    $sql = match ($choose) {
+        'popular' => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                COUNT(co.id) AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                LEFT JOIN cart_order AS co
+                ON p.id = co.product_id
+                GROUP BY co.product_id
+                HAVING  cat_id = ?
+                ORDER BY order_count DESC",
+
+        'most_ordered' => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                SUM(co.quantity) AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                LEFT JOIN cart_order AS co
+                ON p.id = co.product_id
+                GROUP BY co.product_id
+                HAVING  cat_id = ?
+                ORDER BY order_count DESC",
+        'max_min' => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                1 AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                WHERE p.category_id = ?
+                ORDER BY p.price DESC",
+        'min_max' => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                1 AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                WHERE p.category_id = ?
+                ORDER BY p.price ASC",
+        'recently_added' => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                1 AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                WHERE p.category_id = ?
+                ORDER BY p.id DESC",
+        default => "SELECT
+                p.id AS product_id,
+                p.name AS product_name,
+                p.description AS product_description,
+                p.price AS product_price,
+                PI.img_path AS product_image,
+                c.id AS cat_id,
+                1 AS order_count
+                FROM `products` AS p
+
+                INNER JOIN `categories` AS c
+                ON p.category_id = c.id
+
+                INNER JOIN(
+                    SELECT product_id,  MIN(id) AS min_id
+                    FROM `product_imgs`
+                    GROUP BY  product_id
+                ) AS pi_min
+                ON p.id = pi_min.product_id
+                INNER JOIN `product_imgs` AS PI
+                ON pi_min.min_id = PI.id
+
+                WHERE p.category_id = ?
+                ORDER BY p.id DESC"
+    };
+
+    return $sql;
+}
+//#################################################################################
+
+
+//#################################################################################
 // get all products foreach category 
-function categoryProducts($category_id)
+function categoryProducts($category_id, $filter)
 {
 
     $conn = getConnection();
 
-    $sql = "SELECT
-    p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price, PI.img_path AS product_image
-    FROM `products` AS p
-    INNER JOIN `categories` AS c
-    ON p.category_id = c.id
+    // $sql = "SELECT
+    // p.id AS product_id, p.name AS product_name, p.description AS product_description, p.price AS product_price, PI.img_path AS product_image,
+    //     c.id AS cat_id
+    // FROM `products` AS p
+    // INNER JOIN `categories` AS c
+    // ON p.category_id = c.id
 
-    INNER JOIN(
-        SELECT product_id, MIN(id) AS min_id
-        FROM `product_imgs`
-        GROUP BY product_id
-    ) AS pi_min
-    ON p.id = pi_min.product_id
+    // INNER JOIN(
+    //     SELECT product_id, MIN(id) AS min_id
+    //     FROM `product_imgs`
+    //     GROUP BY product_id
+    // ) AS pi_min
+    // ON p.id = pi_min.product_id
 
-    INNER JOIN `product_imgs` AS PI
-    ON
-    pi_min.min_id = PI.id
+    // INNER JOIN `product_imgs` AS PI
+    // ON
+    // pi_min.min_id = PI.id
 
-    WHERE c.id = ?";
+    // WHERE c.id = ?";
+    $sql = filterBy($filter);
+
     $data = [];
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $category_id);
     mysqli_stmt_execute($stmt);
 
-    mysqli_stmt_bind_result($stmt, $id, $name, $desc, $price, $product_image);
+    mysqli_stmt_bind_result($stmt, $id, $name, $desc, $price, $product_image, $cat_id, $order_count);
     while (mysqli_stmt_fetch($stmt)) {
         $data[$id]['product_id'] = $id;
         $data[$id]['product_name'] = $name;
@@ -339,5 +505,30 @@ function popularProducts()
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
     return $result;
+}
+//#################################################################################
+
+
+
+//#################################################################################
+// searching
+function search($value)
+{
+    $value = '%' . $value . '%';
+    $conn = getConnection();
+    $sql = "SELECT p.id 
+    FROM products AS p
+    WHERE p.name LIKE ?";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $value);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_bind_result($stmt, $id);
+    mysqli_stmt_fetch($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $id;
 }
 //#################################################################################

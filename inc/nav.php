@@ -56,6 +56,13 @@
             </ul>
 
             <ul class="navbar-nav mx-2">
+
+                <form class="d-flex" role="search" action="<?= URL ?>search/search.php" method="GET">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+
+
                 <li class="nav-item mx-2">
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
