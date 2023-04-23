@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../../inc/header.php';
 require_once '../../functions/functions.php';
 require_once '../../functions/validations.php';
@@ -28,25 +27,27 @@ if (checkMethod('GET')) {
 
         if (mysqli_num_rows($order_details['result']) == 0) {
             $errors[] = "order not exists";
-        }
-        while ($order_product = mysqli_fetch_assoc($order_details['result'])) {
-            $product_details = getProductInfo($order_product['product_id']);
+        } else {
+
+            while ($order_product = mysqli_fetch_assoc($order_details['result'])) {
+                $product_details = getProductInfo($order_product['product_id']);
 
 
-            if (!$product_details) {
-                $errors[] = "product not exists anymore";
-            } elseif ($product_details['product_stock'] < $order_product['quantity']) {
-                $errors[] = "product " . $product_details['product_name'] . " has not enough stock";
-            } else {
-                $cart_data = [
-                    'user_id' => $_SESSION['data']['id'],
-                    'product_id' => $product_details['product_id'],
-                    'product_name' => $product_details['product_name'],
-                    'quantity' => $order_product['quantity'],
-                    'total_price' => ($product_details['product_price'] * $order_product['quantity'])
-                ];
-                addToCart($cart_data);
-                $number_of_product += 1;
+                if (!$product_details) {
+                    $errors[] = "product not exists anymore";
+                } elseif ($product_details['product_stock'] < $order_product['quantity']) {
+                    $errors[] = "product " . $product_details['product_name'] . " has not enough stock";
+                } else {
+                    $cart_data = [
+                        'user_id' => $_SESSION['data']['id'],
+                        'product_id' => $product_details['product_id'],
+                        'product_name' => $product_details['product_name'],
+                        'quantity' => $order_product['quantity'],
+                        'total_price' => ($product_details['product_price'] * $order_product['quantity'])
+                    ];
+                    addToCart($cart_data);
+                    $number_of_product += 1;
+                }
             }
         }
     }
@@ -58,9 +59,9 @@ if (checkMethod('GET')) {
         $_SESSION['errors'] = $errors;
     }
 
-    if (!isset($_SESSION['cart_counter'])) {
-        $_SESSION['cart_counter'] =  1;
-    }
+    // if (!isset($_SESSION['cart_counter'])) {
+    //     $_SESSION['cart_counter'] =  1;
+    // }
     $_SESSION['cart_counter'] = $_SESSION['cart_counter'] + $number_of_product;
 
 

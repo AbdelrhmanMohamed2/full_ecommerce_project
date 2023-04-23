@@ -41,7 +41,11 @@ $status_result = getAllStatus();
                             <td><?= $order['total_amount'] ?></td>
                             <td><?= $order['time_ordered'] ?></td>
                             <td><?= $order['status'] ?></td>
-                            <td><a href="order_details.php?id=<?= $order['order_id'] ?>" class="btn btn-info">show</a> </td>
+                            <?php if ($_SESSION['data']['roll'] == 1) : ?>
+                                <td><a href="order_details.php?id=<?= $order['order_id'] ?>&user_id=<?= $_GET['id'] ?>" class="btn btn-info">show now</a> </td>
+                            <?php else : ?>
+                                <td><a href="order_details.php?id=<?= $order['order_id'] ?>" class="btn btn-info">show</a> </td>
+                            <?php endif ?>
                         </tr>
                     <?php endwhile ?>
 
