@@ -65,8 +65,10 @@ require_once ROOT . 'inc/nav.php';
                 <li class="list-group-item text-primary">Total Amount : <?= $data['total_amount'] ?></li>
                 <li class="list-group-item text-primary">Order Status : <?= $data['status'] ?> </li>
             </ul>
-            <a href="handlers/same_order.php?id=<?= $_GET['id'] ?>" class="btn btn-primary my-3">Order The Same Order Again?</a>
-            <a href="handlers/print_order.php?id=<?= $_GET['id'] ?>" class="btn btn-success m-3">Print Order Details</a>
+            <?php if (!isset($_GET['user_id'])) : ?>
+                <a href="handlers/same_order.php?id=<?= $_GET['id'] ?>" class="btn btn-primary my-3">Order The Same Order Again?</a>
+                <a href="handlers/print_order.php?id=<?= $_GET['id'] ?>" class="btn btn-success m-3">Print Order Details</a>
+            <?php endif ?>
         </div>
     </div>
 </div>

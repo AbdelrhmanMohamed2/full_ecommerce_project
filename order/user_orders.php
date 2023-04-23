@@ -42,7 +42,9 @@ $status_result = getAllStatus();
                             <td><?= $order['time_ordered'] ?></td>
                             <td><?= $order['status'] ?></td>
                             <?php if ($_SESSION['data']['roll'] == 1) : ?>
-                                <td><a href="order_details.php?id=<?= $order['order_id'] ?>&user_id=<?= $_GET['id'] ?>" class="btn btn-info">show now</a> </td>
+                                <td><a href="order_details.php?id=<?php echo $order['order_id'];
+                                                                    if (isset($_GET['id'])) : ?>&user_id=<?php echo $_GET['id'];
+                                                                                                        endif ?>" class="btn btn-info">show</a> </td>
                             <?php else : ?>
                                 <td><a href="order_details.php?id=<?= $order['order_id'] ?>" class="btn btn-info">show</a> </td>
                             <?php endif ?>
