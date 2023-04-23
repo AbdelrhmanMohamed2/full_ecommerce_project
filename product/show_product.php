@@ -15,7 +15,6 @@ if (!$product) {
 $product_imgs = getProductImgs($_GET['id']);
 
 
-
 ?>
 
 <div class="container">
@@ -101,6 +100,72 @@ $product_imgs = getProductImgs($_GET['id']);
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="row my-3">
+        <div class="col-12">
+            <hr>
+            <?php $reviews = getReviews($_GET['id']); ?>
+            <h4>Reviews Section : <?= count($reviews) ?></h4>
+            <?php foreach ($reviews as $review) : ?>
+                <hr>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><?= $review['first_name'] ?> <?= $review['last_name'] ?></h5>
+                        <p class="card-text"><?= $review['review_body'] ?></p>
+                        <h6 class="card-subtitle mb-2 text-info">At : <?= $review['review_time'] ?></h6>
+
+                        <?php if (isset($_SESSION['data']) && $review['user_id'] == $_SESSION['data']['id']) : ?>
+                            <a class="btn btn-info" data-bs-toggle="collapse" href="#<?= $review['review_id'] ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Edit
+                            </a>
+                            <div class="collapse" id="<?= $review['review_id'] ?>">
+                                <div class="card card-body">
+                                    <form method="POST" action="handlers/update_review.php">
+                                        <div class="mb-3">
+                                            <div class="form-floating">
+                                                <textarea class="form-control" name="review" id="floatingTextarea"><?= $review['review_body'] ?></textarea>
+                                                <label for="floatingTextarea">Want to add your review ?</label>
+                                                <input type="number" name="review_id" value="<?= $review['review_id'] ?>" hidden>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning">Edit</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        <?php endif ?>
+                        <?php if (isset($_SESSION['data']) && ($review['user_id'] == $_SESSION['data']['id'] || $_SESSION['data']['roll'] == 1)) : ?>
+
+                            <a href="handlers/delete_review.php?review_id=<?= $review['review_id'] ?>" class="card-link btn btn-danger">Delete</a>
+                        <?php endif ?>
+                    </div>
+                </div>
+
+            <?php endforeach ?>
+
+            <?php if (isset($_SESSION['data'])) : ?>
+
+                <hr>
+                <form method="POST" action="handlers/add_review.php">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <textarea class="form-control" name="review" id="floatingTextarea"></textarea>
+                            <label for="floatingTextarea">Want to add your review ?</label>
+                        </div>
+                    </div>
+                    <input type="number" name="product_id" value="<?= $_GET['id'] ?>" hidden>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            <?php endif ?>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <hr>
         <h1>Top Product From : <?= $product['category_name'] ?></h1>

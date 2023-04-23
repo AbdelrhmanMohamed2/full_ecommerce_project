@@ -123,6 +123,16 @@ function createTables()
             UNIQUE KEY `my_uniq_id` (`user_id`,`product_id`)
 
         );',
+        'reviews' => 'CREATE TABLE IF NOT EXISTS `reviews` (
+            `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+            `user_id` INT NOT NULL, 
+            `product_id` INT NOT NULL, 
+            `body` TEXT NOT NULL,
+            `time_posted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+
+        );',
     ];
 
     foreach ($tables as $table) {

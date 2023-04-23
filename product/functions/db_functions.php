@@ -532,3 +532,86 @@ function search($value)
     return $id;
 }
 //#################################################################################
+
+//#################################################################################
+// create review on a product
+function review($review_data)
+{
+    $conn = getConnection();
+    $sql = "INSERT INTO `reviews`(`user_id`, `product_id`, `body`) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "iis", $review_data['user_id'], $review_data['product_id'], $review_data['review_body']);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+//#################################################################################
+
+
+//#################################################################################
+// get product reviews
+function getReviews($product_id)
+{
+    $conn = getConnection();
+    $sql = "SELECT 
+    r.id AS review_id, r.body AS review_body, r.time_posted AS review_time, u.first_name AS first_name, u.last_name AS last_name, u.id AS user_id
+    FROM `reviews` AS r 
+    INNER JOIN `users` AS u
+    ON u.id = r.user_id
+    WHERE `product_id` = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $product_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+    $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $reviews;
+}
+//#################################################################################
+
+//#################################################################################
+// delete review
+function deleteReview($review_id, $user_id = "def")
+{
+    $conn = getConnection();
+    if ($user_id != 'def') {
+        $sql = "DELETE FROM `reviews` WHERE `id` = ? AND `user_id` = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $review_id, $user_id);
+    } else {
+        $sql = "DELETE FROM `reviews` WHERE `id` = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $review_id);
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_affected_rows($conn);
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $result;
+}
+//#################################################################################
+
+
+//#################################################################################
+// update review
+function updateReview($review_data)
+{
+    $conn = getConnection();
+    $sql = "UPDATE `reviews` SET `body` = ? WHERE `id` = ? AND `user_id` = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "sii", $review_data['review_body'], $review_data['review_id'], $review_data['user_id']);
+
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_affected_rows($conn);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return $result;
+}
+//#################################################################################
