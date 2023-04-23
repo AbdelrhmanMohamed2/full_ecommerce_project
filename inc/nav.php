@@ -42,6 +42,10 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item" href="<?= URL ?>manager/panel.php">Create Data Panel</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="<?= URL ?>manager/statistics.php">Show Statistics</a></li>
                                 <?php endif ?>
                             </ul>
                         </div>
