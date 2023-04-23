@@ -12,7 +12,7 @@ define('ROOT', 'C:/xampp/htdocs/phpCourse/php_mysql_project/ecommerce/');
 // var_dump(ROOT)
 ?>
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" <?php if (isset($_COOKIE['mode']) && $_COOKIE['mode'] == 'dark') : ?> data-bs-theme="dark" <?php endif ?>>
 
 <head>
     <meta charset="utf-8">
