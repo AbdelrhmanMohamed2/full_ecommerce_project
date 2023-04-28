@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?= URL ?>">King BOB</a>
+
+        <a class="navbar-brand" href="<?= URL ?>"><img width="60" height="60" class="" src="<?= URL ?>inc/logo.png" alt=""></a>
+        <a class="navbar-brand" href="<?= URL ?>"><?= SITE_NAME ?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -126,3 +128,5 @@
         </div>
     </div>
 </nav>
+
+<?php require_once ROOT . 'inc/categories_bar.php' ?>

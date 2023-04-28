@@ -1,6 +1,6 @@
 <?php
 // session_start();
-require_once '../../inc/header.php';
+require_once '../../inc/url.php';
 require_once '../../functions/functions.php';
 require_once '../../functions/validations.php';
 
@@ -14,7 +14,8 @@ $success_massage = 'Order Printed successfully';
 
 if (checkMethod('GET') && isset($_GET['id'])) {
 
-    define('test_file', URL . 'order/handlers/file/');
+    // define('test_file', URL . 'order/handlers/file/');
+    define('test_file', __DIR__ . '/file/');
 
     $order_id = sanitize($_GET['id']);
     //  validations
@@ -40,7 +41,7 @@ if (checkMethod('GET') && isset($_GET['id'])) {
             $total_products_prices = 0;
             $data = [];
 
-            fwrite($file_stream, "####################################################################\n################# Welcome to KING BOB SHOP #########################\n####################################################################\n###################### ORDER DETAILS ###############################\n####################################################################\n########## N ####### product_name # quantity # total amount ########\n####################################################################\n");
+            fwrite($file_stream, "####################################################################\n################# Welcome to " . SITE_NAME . " #########################\n####################################################################\n###################### ORDER DETAILS ###############################\n####################################################################\n########## N ####### product_name # quantity # total amount ########\n####################################################################\n");
 
             while ($order_product = mysqli_fetch_assoc($order_details['result'])) {
                 $product_details = getProductInfo($order_product['product_id']);
@@ -81,7 +82,7 @@ if (checkMethod('GET') && isset($_GET['id'])) {
             fwrite($file_stream, "** User Address :  {$_SESSION['data']['address']}\n");
             fwrite($file_stream, "** User Phone :  {$_SESSION['data']['phone_number']}\n");
             fwrite($file_stream, "####################################################################\n");
-            fwrite($file_stream, "$$$$$$ Thank You for Using KING BOB SHOP : {$now_date} $$$$$\n");
+            fwrite($file_stream, "$$$$$$ Thank You for Using " . SITE_NAME . " : {$now_date} $$$$$\n");
             fwrite($file_stream, "####################################################################\n");
             fclose($file_stream);
 
@@ -90,7 +91,8 @@ if (checkMethod('GET') && isset($_GET['id'])) {
             unlink($file);
             exit;
 
-            echo '<script>window.location.href="' . URL . 'order/order_details.php?id=' . $order_id . '";</script>';
+            echo '<script>window.location.href="' . $_SERVER['HTTP_REFERER'] . '";</script>';
+            // echo '<script>window.location.href="' . URL . 'order/order_details.php?id=' . $order_id . '";</script>';
         }
     }
 
@@ -99,7 +101,7 @@ if (checkMethod('GET') && isset($_GET['id'])) {
 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        redirect(URL . 'order/order_details.php?id=' . $order_id);
+        // redirect(URL . 'order/order_details.php?id=' . $order_id);
     }
 
     // wrong method

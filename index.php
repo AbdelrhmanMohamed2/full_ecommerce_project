@@ -15,14 +15,14 @@ $all_categories = [];
     <div class="row my-5">
         <div class="col-5">
             <ul class="list-group">
-                <h4>All Categories: </h4>
-                <?php while ($cat = mysqli_fetch_assoc($result)) :     ?>
+                <!-- <h4>All Categories: </h4> -->
+                <?php /*while ($cat = mysqli_fetch_assoc($result)) :     ?>
                     <li class="list-group-item"><a href="product/products_by_cat.php?id=<?= $cat['id'] ?>"><?= $cat['name'] ?></a></li>
 
                 <?php
                     $all_categories[$cat['id']]['id'] = $cat['id'];
                     $all_categories[$cat['id']]['name'] = $cat['name'];
-                endwhile ?>
+                endwhile*/ ?>
 
             </ul>
         </div>
@@ -40,8 +40,8 @@ $all_categories = [];
 
             while ($product = mysqli_fetch_assoc($popular)) :
             ?>
-                <div class="card" style="width: 18rem;">
-                    <img width="200" height="250" src="<?= URL ?>product/imgs/<?= $product['product_img'] ?>" class="card-img-top" alt="...">
+                <div class="card mb-3" style="width: 18rem;">
+                    <img width="200" height="250" src="<?= URL ?>product/imgs/<?= $product['product_img'] ?>" class="card-img-top " alt="...">
                     <div class="card-body">
                         <h5 class="card-title"><?= $product['product_name'] ?></h5>
                         <h6 class="card-text"><?= $product['category_name'] ?></h6>
@@ -68,12 +68,14 @@ $all_categories = [];
         <hr>
     </div>
 
-    <?php foreach ($all_categories as  $cat) : ?>
+    <?php while ($cat = mysqli_fetch_assoc($result)) :     ?>
+
+
         <div class="row  my-5">
             <hr>
             <h4>Top Products For <a href="product/products_by_cat.php?id=<?= $cat['id'] ?>"><?= $cat['name'] ?></a> : </h4>
             <hr>
-            <div class="col-12 d-flex gap-5">
+            <div class="col-12 d-flex gap-5 mb-3">
 
                 <?php
                 $top_products_result = topProductsForCat($cat['id']);
@@ -104,6 +106,7 @@ $all_categories = [];
             </div>
             <hr>
         </div>
-    <?php endforeach ?>
+    <?php endwhile ?>
+
 </div>
 <?php require_once 'inc/footer.php'; ?>

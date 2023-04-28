@@ -12,7 +12,6 @@ if ($_SESSION['data']['roll'] < 2) {
     $user_id = $_SESSION['data']['id'];
 }
 $result = getUserOrders($user_id);
-$status_result = getAllStatus();
 
 ?>
 

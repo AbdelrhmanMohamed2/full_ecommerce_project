@@ -59,6 +59,7 @@ function getAllUsersOrders()
     ON u.id = o.user_id
     INNER JOIN `orders_status` AS s
     ON o.status = s.id
+    ORDER BY order_id DESC
     ";
     $result = mysqli_query($conn, $sql);
 
@@ -149,7 +150,8 @@ function getUserOrders($user_id)
     FROM `orders` AS o
     INNER JOIN `orders_status` AS s
     ON o.status = s.id
-    WHERE o.user_id = ?";
+    WHERE o.user_id = ?
+    ORDER BY order_id DESC";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $user_id);

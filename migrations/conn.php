@@ -86,8 +86,8 @@ function createTables()
             `product_name` VARCHAR (50) NOT NULL,
             `quantity` INT NOT NULL, 
             `total_price` INT NOT NULL, 
-            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
         );',
         'orders_status' => 'CREATE TABLE IF NOT EXISTS `orders_status` (
             `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
@@ -101,7 +101,7 @@ function createTables()
             `total_amount` FLOAT NOT NULL,
             `delivery` INT NOT NULL,
             `time_ordered` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
             FOREIGN KEY (`status`) REFERENCES `orders_status`(`id`)
         );',
         'cart_order' => 'CREATE TABLE IF NOT EXISTS `cart_order` (
@@ -110,7 +110,7 @@ function createTables()
             `product_id` INT NOT NULL,
             `quantity` INT NOT NULL,
             `total_price` INT NOT NULL,
-            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ,
             FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`)
         );',
         'wishList' => 'CREATE TABLE IF NOT EXISTS `wishList` (
@@ -118,8 +118,8 @@ function createTables()
             `user_id` INT NOT NULL, 
             `product_id` INT NOT NULL, 
             `product_name` VARCHAR (50) NOT NULL,
-            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`),
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE,
             UNIQUE KEY `my_uniq_id` (`user_id`,`product_id`)
 
         );',
@@ -129,8 +129,8 @@ function createTables()
             `product_id` INT NOT NULL, 
             `body` TEXT NOT NULL,
             `time_posted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+            FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+            FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 
         );',
     ];
