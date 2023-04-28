@@ -2,9 +2,9 @@
 <?php
 require_once  ROOT . 'functions/functions.php';
 if (!isset($_SESSION['data'])) {
-    redirect('user/login.php');
+    redirect(URL . 'user/login.php');
 } elseif ($_SESSION['data']['roll'] > 2) {
-    redirect('../user/profile.php');
+    redirect(URL . 'user/profile.php');
 }
 require_once  ROOT . 'inc/nav.php';
 require_once   'functions/db_functions.php';

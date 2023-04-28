@@ -4,7 +4,7 @@ require_once  ROOT . 'functions/functions.php';
 
 
 if (!isset($_SESSION['data'])) {
-    redirect('user/login.php');
+    redirect(URL . 'user/login.php');
 }
 require_once 'cart_functions/cart_functions.php';
 $cart_info = getCartInfo($_SESSION['data']['id']);

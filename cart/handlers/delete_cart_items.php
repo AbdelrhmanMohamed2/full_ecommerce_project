@@ -21,5 +21,5 @@ if (checkMethod('GET') && isset($_SESSION['data'])) {
 } else {
     $errors['method_error'] = 'wrong method';
     $_SESSION['errors'] = $errors;
-    redirect('../panel.php');
+    redirect(URL . 'manager/panel.php');
 }

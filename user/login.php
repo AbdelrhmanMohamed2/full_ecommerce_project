@@ -1,11 +1,11 @@
-<?php require_once '../inc/header.php'; ?>
-<?php require_once  ROOT . 'inc/nav.php';
+<?php require_once '../inc/header.php';
+
 
 require_once '../functions/functions.php';
 if (isset($_SESSION['data'])) {
-    redirect('profile.php');
+    redirect(URL . 'user/profile.php');
 }
-
+require_once  ROOT . 'inc/nav.php';
 ?>
 
 <div class="container">

@@ -2,7 +2,7 @@
 <?php
 require_once  ROOT . 'functions/functions.php';
 if (!isset($_SESSION['data'])) {
-    redirect('user/login.php');
+    redirect(URL . 'user/login.php');
 }
 require_once  ROOT . 'inc/nav.php';
 require_once   'list_functions/list_db_functions.php';

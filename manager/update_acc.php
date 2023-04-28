@@ -5,9 +5,9 @@ require_once  ROOT . 'functions/functions.php';
 require_once  ROOT . 'user/db_functions/users_functions.php';
 
 if (!isset($_SESSION['data'])) {
-    redirect('../user/login.php');
+    redirect(URL . 'user/login.php');
 } elseif ($_SESSION['data']['roll'] != 1 || !isset($_GET['id'])) {
-    redirect('../user/profile.php');
+    redirect(URL . 'user/profile.php');
 }
 $user_info = getUserInfo($_GET['id']);
 if (!$user_info) {

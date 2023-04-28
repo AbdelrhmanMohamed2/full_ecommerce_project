@@ -2,7 +2,7 @@
 <?php require_once  ROOT . 'inc/nav.php';
 require_once '../functions/functions.php';
 if (isset($_SESSION['data'])) {
-    redirect('profile.php');
+    redirect(URL . 'user/profile.php');
 }
 ?>
 

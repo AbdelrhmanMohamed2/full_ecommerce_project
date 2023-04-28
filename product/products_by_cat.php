@@ -5,11 +5,11 @@ require_once  ROOT . 'manager/cat_db_functions/cat_functions.php';
 require_once 'functions/db_functions.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    redirect('../index.php');
+    redirect(URL . 'index.php');
 }
 $cat_name = getOnaCat($_GET['id']);
 if (!$cat_name) {
-    redirect('../index.php');
+    redirect(URL . 'index.php');
 }
 $result = categoryProducts($_GET['id'], ($_GET['filter'] ?? 'most_recent'));
 

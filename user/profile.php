@@ -3,7 +3,7 @@
 
 require_once '../functions/functions.php';
 if (!isset($_SESSION['data'])) {
-    redirect('login.php');
+    redirect(URL . 'user/login.php');
 }
 $user = $_SESSION['data'];
 

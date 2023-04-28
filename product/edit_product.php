@@ -5,9 +5,9 @@ require_once  ROOT . 'functions/functions.php';
 require_once 'functions/db_functions.php';
 
 if (!isset($_SESSION['data'])) {
-    redirect('../user/login.php');
+    redirect(URL . 'user/login.php');
 } elseif (!isset($_GET['id']) || !is_numeric($_GET['id'])  || $_SESSION['data']['roll'] != 1) {
-    redirect('../index.php');
+    redirect(URL . 'index.php');
 }
 
 require_once '../manager/cat_db_functions/cat_functions.php';

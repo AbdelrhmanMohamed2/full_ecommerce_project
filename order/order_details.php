@@ -11,7 +11,7 @@ $order_details = getOrderInfo($_GET['id'], $user_id);
 
 if (mysqli_num_rows($order_details['result']) == 0) {
     redirect(URL);
-} elseif (($order_details['user_id'] != $_SESSION['data']['id']) && ($_SESSION['data']['roll'] != 1)) {
+} elseif (($order_details['user_id'] != $_SESSION['data']['id']) && ($_SESSION['data']['roll'] > 2)) {
     redirect(URL);
 }
 require_once ROOT . 'inc/nav.php';
